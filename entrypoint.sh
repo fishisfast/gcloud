@@ -60,17 +60,23 @@ echo "/google-cloud-sdk/bin/gcloud" >> $GITHUB_PATH
 echo "/google-cloud-sdk/bin/gsutil" >> $GITHUB_PATH
 
 command="gcloud"
-if [ "$CLI" = "gsutil" ] || [ "$INPUT_CLI" = "gsutil" ]; then
-    command="gsutil"
+
+if [[ ! -z "$CLI" ]]; then
+    command="$CLI"
 fi
 
-if [ "$CLI" = "kubectl" ] || [ "$INPUT_CLI" = "kubectl" ]; then
+if [[ ! -z "$INPUT_CLI" ]]; then
+    command="$INPUT_CLI"
+fi
+
+if [ "$command" = "kubectl" ] ||
+   [ "$KUBECTL" = "true" ] || [ "$INPUT_KUBECTL" = "true" ]; then
     gcloud components install kubectl
     echo "/google-cloud-sdk/bin/kubectl" >> $GITHUB_PATH
-    command="kubectl"
 fi
 
-if [ "$command" = "gcloud" ] && [ "$1" = "beta" ]; then
+if [ "$command" = "gcloud" ] && [ "$1" = "beta" ] ||
+   [ "$BETA" = "true" ] || [ "$INPUT_BETA" = "true" ]; then
     gcloud components install beta
 fi
 

@@ -12,6 +12,14 @@ inputs:
     description: 'cli command to run (gcloud, gsutil and kubectl available)'
     default: 'gcloud'
     required: false
+  beta:
+    description: 'Install beta components'
+    default: false
+    required: false
+  kubectl:
+    description: 'Install kubectl'
+    default: false
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
